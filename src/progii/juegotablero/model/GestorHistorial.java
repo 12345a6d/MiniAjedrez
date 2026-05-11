@@ -1,0 +1,89 @@
+package progii.juegotablero.model;
+
+
+import progii.juegotablero.exceptions.MovimientoException;
+import stacks.exceptions.EmptyStackException;
+import stacks.Stack;
+
+
+
+/**
+ * Clase que gestiona el historial de movimientos de la partida
+ * 
+ *
+ */
+public class GestorHistorial {
+	
+	/**
+	 * Pila con los movimientos a deshacer
+	 */
+	private Stack <Movimiento> pilaDeshacer;
+	
+
+	/**
+	 * Pila con los movimientos a rehacer
+	 */
+	private Stack <Movimiento> pilaRehacer;
+	
+	/**
+	 * Crea e inicializa las pilas del gestor del historial
+	 */
+	public GestorHistorial() {
+	pilaDeshacer = new Stack <Movimiento>();
+	pilaRehacer = new Stack <Movimiento>();
+	}
+	
+	/**
+	 * Guarda un nuevo movimientos en el historial
+	 * @param movimiento Movimiento a guardar
+	 */
+	public void guardarMovimiento (Movimiento movimiento) {
+	if (!pilaDeshacer.isEmpty()) {
+	try {
+		movimiento = pilaDeshacer.pop();
+	} catch (EmptyStackException e) {
+		e.printStackTrace();
+	}
+	pilaRehacer.push(movimiento);
+	}
+	if(!pilaRehacer.isEmpty()) {
+	pilaRehacer.makeEmpty();
+	}
+	}
+	
+	/**
+	 * Devuelve el último movimiento realizado y lo elimina de la pila de deshacer
+	 * @return El movimiento a deshacer
+	 * @throws MovimientoException En caso de que no haya movimientos que deshacer
+	 * @throws  
+	 */
+	public Movimiento deshacer () throws MovimientoException{
+		if(pilaDeshacer.isEmpty()) {
+			throw new MovimientoException("No se puede deshacer porque no hay movimientos para deshacer");}
+		
+			Movimiento movimiento = pilaDeshacer.pop();
+		
+		pilaRehacer.push(movimiento);
+		return movimiento;
+			
+		}
+
+	
+	/**
+	 * Devuelve el último movimiento deshecho y lo elimina de la pila de rehacer
+	 * @return El movimiento a rehacer
+	 * @throws MovimientoException En caso de que no haya movimientos que rehacer
+	 */
+	public Movimiento rehacer() throws MovimientoException {
+	    if (pilaRehacer.isEmpty()) {
+	        throw new MovimientoException("No se puede rehacer porque no hay movimientos para rehacer");
+	    }
+	    try {
+	        Movimiento movimiento = pilaRehacer.pop();
+	        pilaDeshacer.push(movimiento);
+	        return movimiento;
+	    } catch (EmptyStackException e) {
+	    e.printStackTrace();
+	    }
+	}
+	}
