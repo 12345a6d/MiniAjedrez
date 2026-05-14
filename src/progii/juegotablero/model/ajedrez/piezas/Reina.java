@@ -1,5 +1,6 @@
-package progii.juegotablero.model.ajedrez.piezas;
+ackage progii.juegotablero.model.ajedrez.piezas;
 
+import list.ArrayList;
 import list.IList;
 import progii.juegotablero.model.Casilla;
 import progii.juegotablero.model.Jugador;
@@ -10,11 +11,29 @@ public class Reina extends PiezaAjedrez {
 
 	@Override
 	public IList<Casilla> movimientosValidos() {
-		// TODO Auto-generated method stub
-		return null;
+		IList<Casilla> resultado = new ArrayList<>();
+		
+		//Vertical descendente según el modelo interno (matriz)
+		casillasVisitables (resultado, 1, 0);
+		casillasVisitables (resultado, 1,1);
+		
+		//Vertical ascendente según el modelo interno (matriz)
+		casillasVisitables (resultado, -1, 0);
+		casillasVisitables (resultado, -1,1);
+
+		//Horiznotal izquierda según el modelo interno (matriz)
+		casillasVisitables (resultado, 0, -1);
+		casillasVisitables (resultado, 1,-1);
+		
+		//Horizontal derecha según el modelo interno (matriz)
+		casillasVisitables (resultado, 0, 1);
+		casillasVisitables (resultado, -1,-1);
+		
+
+		return resultado;
 	}
-	public Reina (Jugador jugador, TipoPiezaAjedrez tipoPieza, int fila, char columna) {
-		super(jugador,tipoPieza,fila,columna);}
+	public Reina (Jugador jugador,int fila, char columna) {
+		super(jugador,TipoPiezaAjedrez.REINA,fila,columna);}
 
 
 }
