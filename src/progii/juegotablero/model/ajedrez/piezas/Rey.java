@@ -10,8 +10,13 @@ public class Rey extends PiezaAjedrez {
 
 	@Override
 	public IList<Casilla> movimientosValidos() {
-		// TODO Auto-generated method stub
-		return null;
+		IList<Casilla> resultado = new IList <>();
+		casillaVisitable(resultado, -1,1);
+		casillaVisitable(resultado,1,0);
+		casillaVisitable(resultado, -1,-1);
+		casillaVisitable(resultado, 0,1);
+		casillaVisitable(resultado, -1,0);
+		return resultado;
 	}
 	public Rey (Jugador jugador, int fila, char columna) {
 		super(jugador,TipoPiezaAjedrez.REY,fila,columna);}
