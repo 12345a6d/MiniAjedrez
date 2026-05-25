@@ -1,0 +1,45 @@
+import java.io.*;
+import java.util.*;
+
+public class Partida1 {
+
+    enum Color { BLANCO, NEGRO }
+    enum TipoPieza { REY, REINA, TORRE, ALFIL, CABALLO, PEON }
+
+    static class Pieza {
+        final TipoPieza tipo;
+        final Color color;
+        final int fila;
+        final char columna;
+
+        Pieza(TipoPieza tipo, Color color, int fila, char columna) {
+            this.tipo = tipo;
+            this.color = color;
+            this.fila = fila;
+            this.columna = columna;
+        }
+
+        @Override
+        public String toString() {
+            return tipo + "_" + color + " en " + fila + columna;
+        }
+    }
+
+    public static List<Pieza> cargarDesdeArchivo(String ruta) throws IOException {
+        File archivo = new File(ruta);
+
+        if (!archivo.exists()) {
+            throw new FileNotFoundException("No se encontró el archivo: " + archivo.getAbsolutePath());
+        }
+
+        List<Pieza> piezas = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(archivo))) {
+            String linea;
+
+            while ((linea = br.readLine()) != null) {
+                if (linea.isBlank()) continue;
+
+                String[] partes = linea.split("\\s+");
+
+                int fila = Integer.parseInt(partes[0]);
