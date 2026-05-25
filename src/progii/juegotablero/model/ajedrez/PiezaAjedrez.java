@@ -1,3 +1,8 @@
+/*
+ * Autor: Alejandro Gallego Gragera.
+ * Correo electrónico: alejandro.gallegogragera@alumnos.upm.es
+ */
+
 package progii.juegotablero.model.ajedrez;
 
 import java.util.function.BiFunction;
@@ -51,7 +56,7 @@ public abstract class PiezaAjedrez extends Pieza {
 	 */
 	@Override
 	public final boolean movimientoDentroLimites (int toFila, int toColumna) {
-		return !(toFila<0 || toColumna<0 || toFila>7 || toColumna>7) && (this.getFila() != toFila && this.getColumna() != toColumna);
+		return !(toFila<0 || toColumna<0 || toFila>7 || toColumna>7) && (this.getFila() != toFila || this.getColumna() != toColumna);
 
 	}
 	
@@ -149,14 +154,14 @@ public abstract class PiezaAjedrez extends Pieza {
 	protected void casillasVisitables (IList<Casilla> resultado,int incFila, int incColumna){
 		int fila = super.getFila() + incFila;
 		int columna = super.getColumna() + incColumna;
-		while (!movimientoDentroLimites(fila,columna)) {
-			if (queHay(fila, columna) != null) {
+		PiezaAjedrez pieza = queHay(fila,columna);
+		while (movimientoDentroLimites(fila,columna) && pieza != null) {
 			casillaVisitable(resultado, fila, columna);
 			}
 			fila+=incFila;
 			columna+=incColumna;
-		}
-	}
+			}
+			
 	
 	/**
 	 * Método portegiod que comprueba si la casilla indicada es visitable
