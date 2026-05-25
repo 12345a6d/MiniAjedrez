@@ -1,3 +1,7 @@
+/*
+ * Autor: Alejandro Gallego Gragera.
+ * Correo electrónico: alejandro.gallegogragera@alumnos.upm.es
+ */
 package progii.juegotablero.model.ajedrez.piezas;
 
 import list.ArrayList;
